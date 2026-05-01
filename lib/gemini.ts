@@ -1,6 +1,10 @@
 export async function askGemini(prompt: string) {
   const apiKey = process.env.GEMINI_API_KEY;
 
+  if (!apiKey) {
+    return "Missing API key";
+  }
+
   const res = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
     {
@@ -22,6 +26,6 @@ export async function askGemini(prompt: string) {
 
   return (
     data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-    "No response from AI"
+    "No response"
   );
 }
